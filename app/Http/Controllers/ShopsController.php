@@ -24,7 +24,7 @@ class ShopsController extends Controller
     public function show(Request $request){
         $id = $request->id;
         //>>1.查询单个商户信息
-        $shop = Shops::where('id',$id)->select('id','shop_name','shop_img','shop_rating','brand','on_time','fengniao','bao','piao','start_send','send_cost','notice','discount')->first();
+        $shop = Shops::where('id',$id)->select('id','shop_name','shop_img','shop_rating','brand','on_time','fengniao','bao','piao','start_send','send_cost','notice','discount')->first();//可以用makehidden
         $shop['zhun']=1;
         $shop['distance']=637;
         $shop['estimate_time']=30;
@@ -32,9 +32,9 @@ class ShopsController extends Controller
         //>>2.查询商品分类表
         $commodity=MenuCategories::where('shop_id',$id)->select('description','is_selected','name','type_accumulation')->get();
 //        >>3.查询菜品表
-        $goods_list=Menus::where('shop_id',$id)->select('goods_name','rating','goods_price','description','month_sales','rating_count','tips','satisfy_count','satisfy_rate','goods_img')->get();
+        $goods_list=Menus::where('shop_id',$id)->select('id','goods_name','rating','goods_price','description','month_sales','rating_count','tips','satisfy_count','satisfy_rate','goods_img')->get();
         foreach($goods_list as &$value){
-            $value['goods_id']=$id;
+            $value['goods_id']=$value['id'];
         }
         //先把菜品压进分类
         foreach ($commodity as &$value){
