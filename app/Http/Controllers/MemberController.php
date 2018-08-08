@@ -187,9 +187,10 @@ class MemberController extends Controller
             // fixme 选填: 启用https
             // ,true
             );
-            Mail::raw('商户认证审核已经通过',function ($message){
-                $message->subject('饿了吧外卖');
-                $message->to('yukuaiguyi@163.com');
+            //>>2.发送邮件测试
+            Mail::send('welcome',[],function ($message){
+                $message->from('yukuaiguyi@163.com','饿了吧外卖');
+                $message->to(['yukuaiguyi@163.com'])->subject('商户审核认证通过');
             });
             return $orders->id;
         });
